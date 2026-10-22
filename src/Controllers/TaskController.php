@@ -21,8 +21,20 @@ class TaskController
 
     public function getList(Request $request, Response $response): Response
     {
-        $tasks = Task::all();
+        // получаем параметры запроса
+        $params = $request->getQueryParams();
+
+        // выделим страницу и кол-во записей на ней
+        $page = isset($params['page']) ? (int)$params['page'] : 1;
+        $onPage = isset($params['on_page']) ? (int)$params['on_page'] : 10;
+
+        $tasks = Task::query()
+            ->with('category')
+            ->orderBy('id')
+            ->paginate($onPage, ['*'], 'page', $page);
+            
         $response->getBody()->write($tasks->toJson());
+
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
