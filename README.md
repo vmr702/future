@@ -4,5 +4,8 @@
 # Наполнение категорий тестовыми данными
 - docker compose exec php vendor/bin/phinx seed:run -c phinx.php -s CategorySeeder
 
+# Наполнение статусов тестовыми данными
+- docker compose exec php vendor/bin/phinx seed:run -c phinx.php -s StatusSeeder
+
 # Наполнение задач тестовыми данными
 - docker compose exec php vendor/bin/phinx seed:run -c phinx.php -s TaskSeeder

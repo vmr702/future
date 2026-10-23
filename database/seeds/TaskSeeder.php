@@ -14,6 +14,7 @@ class TaskSeeder extends AbstractSeed
             $tasks[] = [
                 'title' => "Задача $i",
                 'description' => "Описание задачи $i",
+                'status_id' => rand(1, 2),
                 'category_id' => rand(1, 3),
                 'created_at' => $now,
                 'updated_at' => $now,

@@ -13,19 +13,32 @@ class Task extends Model
         'title',
         'description',
         'due_at',
-        'status',
+        'status_id',
         'priority',
+        'category_id'
+    ];
+
+    public const SORTABLE_COLUMNS = [
+        'due_at',
+        'created_at',
+        'title',
+        'priority',
+        'status_id',
         'category_id'
     ];
 
     protected $casts = [
         'priority' => TaskPriority::class,
-        'status' => 'boolean',
         'due_at' => 'datetime',
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }

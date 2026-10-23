@@ -12,12 +12,26 @@ $dotenv->safeLoad();
 require __DIR__ . '/../config/database.php';
 
 $app = AppFactory::create();
+$app->addBodyParsingMiddleware();
 
 $app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("base");
+    $response->getBody()->write("<a href='/docs'>Docs</a>");
     return $response;
 });
 
+$app->get('/docs', function (Request $request, Response $response) {
+    $html = file_get_contents(__DIR__ . '/../public/swagger.html');
+    $response->getBody()->write($html);
+    return $response;
+});
+
+$app->get('/openapi.json', function (Request $request, Response $response) {
+    $json = file_get_contents(__DIR__ . '/../openapi.json');
+    $response->getBody()->write($json);
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
+// API
 $app->get('/api/tasks', TaskController::class . ':getList');
 $app->get('/api/tasks/{id}', TaskController::class . ':getOne');
 $app->post('/api/tasks', TaskController::class . ':add');
