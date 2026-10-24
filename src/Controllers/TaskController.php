@@ -197,7 +197,9 @@ class TaskController
 
         $response->getBody()->write(json_encode(['message' => 'Задача успешно удалена']));
 
-        return $response->withStatus(200);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
     }
 
     /**
